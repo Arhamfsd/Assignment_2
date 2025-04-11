@@ -36,7 +36,7 @@
     <div class="feedbackmain">
         <div class="feedback " id="feedback">
             <h3 class="text-center">Feedback Form</h3>
-            <form >
+            <form id="feedbackForm">
                 <div class="mb-3">
                     <label for="feedbackName" class="form-label">Name</label>
                     <br>
@@ -86,6 +86,46 @@
             <a href="#" class="text-white">Instagram</a>
         </p>
     </footer>
+    <script>
+      
+        document.addEventListener("DOMContentLoaded", function() {
+            const feedbackForm = document.getElementById('feedbackForm');
+
+            feedbackForm.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+
+                
+                const feedbackData = {
+                    name: document.getElementById('feedbackName').value,
+                    email: document.getElementById('feedbackEmail').value,
+                    message: document.getElementById('feedbackMessage').value
+                };
+
+               
+                const xhr = new XMLHttpRequest();
+
+          
+                xhr.open("POST", "http://localhost:3000/feedback", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+
+               
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                       
+                        alert('Feedback submitted successfully!');
+                        
+                        feedbackForm.reset();
+                    } else {
+                        
+                        alert('An error occurred. Please try again later.');
+                    }
+                };
+
+                
+                xhr.send(JSON.stringify(feedbackData));
+            });
+        });
+    </script>
     <script src="bootstrap-5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
